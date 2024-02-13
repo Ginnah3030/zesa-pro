@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consumption Summary</title>
+    <style>
+        body {
+            background-image: url('{{ url_for('static', filename='background.jpg') }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            width: 80%;
+            max-width: 400px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+
+        label {
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        input {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .result {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .result h2 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .result p {
+            font-size: 18px;
+            color: #333;
+        }
+
+        .purchase {
+            background-color: #2196F3;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            text-align: center;
+            margin-top: 20px;
+            display: inline-block;  /* Use inline-block to make it look like a button */
+            width: 100%;
+            box-sizing: border-box;  /* Ensure padding and border are included in width */
+        }
+
+        .purchase:hover {
+            background-color: #0b7dda;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Consumption Summary</h1>
+
+        <form action="/consumption_summary" method="post">
+            <label for="meter_number">Enter Meter Number:</label>
+            <input type="text" id="meter_number" name="meter_number" required>
+            <button type="submit">Get Consumption Summary</button>
+        </form>
+
+        {% if daily_consumption is defined %}
+            <div class="result">
+                <h2>Daily Consumption</h2>
+                <p>{{ daily_consumption }} kWh</p>
+            </div>
+        {% endif %}
+
+        {% if weekly_consumption is defined %}
+            <div class="result">
+                <h2>Weekly Consumption</h2>
+                <p>{{ weekly_consumption }} kWh</p>
+            </div>
+        {% endif %}
+
+        {% if monthly_consumption is defined %}
+            <div class="result">
+                <h2>Monthly Consumption</h2>
+                <p>{{ monthly_consumption }} kWh</p>
+            </div>
+        {% endif %}
+
+        {% if yearly_consumption is defined %}
+            <div class="result">
+                <h2>Yearly Consumption</h2>
+                <p>{{ yearly_consumption }} kWh</p>
+            </div>
+        {% endif %}
+
+        <!-- "Purchase More" button as a link -->
+        <a href="/index" class="purchase">Purchase More</a>
+
+    </div>
+</body>
+</html>
